@@ -55,12 +55,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// LER A PORTA DO RENDER
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 if (app.Environment.IsDevelopment())
 {
@@ -68,10 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors("ReactPolicy");
-
 
 app.UseAuthentication();
 app.UseAuthorization();
